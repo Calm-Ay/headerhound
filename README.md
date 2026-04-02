@@ -1,12 +1,23 @@
 # HeaderHound
 
-HeaderHound is a beginner-friendly but practical Python CLI for spotting common web security header and response misconfigurations.
+HeaderHound is a Python-based web header and response misconfiguration scanner built for learning, recon, and lightweight security testing.
+
+It helps you quickly inspect web targets for missing security headers, weak cookie flags, suspicious CORS behavior, redirect chains, and basic information disclosure.
+
+## Why this project matters
+
+HeaderHound is intentionally small enough to understand, but useful enough to be worth running.
+
+It is a good starter project for:
+- web application security learning
+- bug bounty recon workflows
+- cloud / edge security basics
+- building security tooling in Python
 
 ## Features
 
 - Scan a single URL or a file of URLs
 - Concurrent scanning for multi-target input
-- Follow redirects and report redirect chains
 - Check common security headers:
   - Content-Security-Policy
   - Strict-Transport-Security
@@ -14,58 +25,44 @@ HeaderHound is a beginner-friendly but practical Python CLI for spotting common 
   - X-Content-Type-Options
   - Referrer-Policy
   - Permissions-Policy
-- Review cookies for missing `Secure`, `HttpOnly`, and `SameSite`
+- Review cookies for missing:
+  - `Secure`
+  - `HttpOnly`
+  - `SameSite`
 - Detect broad or reflective CORS behavior
 - Report server/banner disclosure
-- Output as readable text or JSON
-- Severity summaries for findings
+- Follow redirects and show redirect chains
+- Output in readable text or JSON
+- Summarize findings by severity
 
-## Install
+## Installation
 
 ```bash
+git clone https://github.com/Calm-Ay/headerhound.git
 cd headerhound
 python3 -m venv .venv
-. .venv/bin/activate
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-### Scan one URL
+### Scan one target
 ```bash
 python3 -m headerhound.cli --url https://example.com
 ```
 
-### Scan multiple URLs from a file
+### Scan multiple targets
 ```bash
-python3 -m headerhound.cli --file sample_targets.txt
+python3 -m headerhound.cli --file sample_targets.txt --workers 5
 ```
 
-### Use concurrency
+### Save JSON output
 ```bash
-python3 -m headerhound.cli --file sample_targets.txt --workers 10
+python3 -m headerhound.cli --file sample_targets.txt --workers 5 --format json --output results.json
 ```
 
-### JSON output
-```bash
-python3 -m headerhound.cli --url https://example.com --format json
-```
-
-### Save results
-```bash
-python3 -m headerhound.cli --file sample_targets.txt --format json --output results.json
-```
-
-## What it checks
-
-- Missing recommended security headers
-- Cookie flag weaknesses
-- Wildcard or reflective CORS behavior
-- Server disclosure through `Server` or `X-Powered-By`
-- Redirect chain summary
-- Severity distribution across findings
-
-## Example output
+## Example text output
 
 ```text
 Target: https://example.com
@@ -82,16 +79,44 @@ Summary:
 Findings:
   - [HIGH] CORS reflects supplied Origin header (https://evil.example)
   - [MEDIUM] Missing X-Frame-Options
+  - [LOW] Missing Referrer-Policy
+```
+
+## Example JSON output
+
+```bash
+python3 -m headerhound.cli --url https://example.com --format json
+```
+
+## Project structure
+
+```text
+headerhound/
+├── headerhound/
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── cli.py
+│   ├── output.py
+│   └── scanner.py
+├── sample_targets.txt
+├── requirements.txt
+├── LICENSE
+└── README.md
 ```
 
 ## Roadmap
 
+Planned next improvements:
+- TLS certificate checks
 - HTML report output
-- TLS certificate summary
-- Tech fingerprinting
-- Custom header profiles
-- Rate limiting and retry controls
+- tech fingerprinting
+- custom header profiles
+- retry / rate-limit controls
 
 ## Disclaimer
 
-Use only on systems you own or are authorized to test.
+Use only on systems you own or are explicitly authorized to test.
+
+## License
+
+MIT
