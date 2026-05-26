@@ -1,39 +1,42 @@
 # HeaderHound
 
-HeaderHound is a Python-based web header and response misconfiguration scanner built for learning, recon, and lightweight security testing.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Type](https://img.shields.io/badge/Type-Security%20Tool-red?style=for-the-badge&logo=shield)
+![Use Case](https://img.shields.io/badge/Use%20Case-Recon%20%7C%20Bug%20Bounty-orange?style=for-the-badge)
 
-It helps you quickly inspect web targets for missing security headers, weak cookie flags, suspicious CORS behavior, redirect chains, and basic information disclosure.
+> A Python-based web header and misconfiguration scanner built for security testing, recon, and bug bounty workflows. Fast, lightweight, and easy to understand.
 
-## Why this project matters
+---
 
-HeaderHound is intentionally small enough to understand, but useful enough to be worth running.
+## Overview
 
-It is a good starter project for:
-- web application security learning
-- bug bounty recon workflows
-- cloud / edge security basics
-- building security tooling in Python
+HeaderHound helps you quickly inspect web targets for missing security headers, weak cookie flags, suspicious CORS behavior, redirect chains, and basic information disclosure. It is intentionally small enough to understand fully, but useful enough to be worth running in real recon workflows.
+
+---
 
 ## Features
 
-- Scan a single URL or a file of URLs
-- Concurrent scanning for multi-target input
-- Check common security headers:
-  - Content-Security-Policy
-  - Strict-Transport-Security
-  - X-Frame-Options
-  - X-Content-Type-Options
-  - Referrer-Policy
-  - Permissions-Policy
-- Review cookies for missing:
+- Scan a single URL or a file of multiple targets
+- Concurrent scanning for fast multi-target input
+- **Security Header Checks:**
+  - `Content-Security-Policy`
+  - `Strict-Transport-Security`
+  - `X-Frame-Options`
+  - `X-Content-Type-Options`
+  - `Referrer-Policy`
+  - `Permissions-Policy`
+- **Cookie Flag Analysis:**
   - `Secure`
   - `HttpOnly`
   - `SameSite`
 - Detect broad or reflective CORS behavior
-- Report server/banner disclosure
-- Follow redirects and show redirect chains
-- Output in readable text or JSON
-- Summarize findings by severity
+- Server/banner disclosure detection
+- Redirect chain tracking
+- Output in readable **text** or **JSON**
+- Severity-based findings summary (`Critical` → `Info`)
+
+---
 
 ## Installation
 
@@ -45,24 +48,28 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+---
+
 ## Usage
 
-### Scan one target
+### Scan a single target
 ```bash
 python3 -m headerhound.cli --url https://example.com
 ```
 
-### Scan multiple targets
+### Scan multiple targets from a file
 ```bash
 python3 -m headerhound.cli --file sample_targets.txt --workers 5
 ```
 
-### Save JSON output
+### Save output as JSON
 ```bash
 python3 -m headerhound.cli --file sample_targets.txt --workers 5 --format json --output results.json
 ```
 
-## Example text output
+---
+
+## Example Output
 
 ```text
 Target: https://example.com
@@ -70,25 +77,24 @@ Status: ok
 Top Severity: HIGH
 Final URL: https://example.com/
 HTTP Status: 200
+
 Summary:
-  - Critical: 0
-  - High: 1
-  - Medium: 3
-  - Low: 2
-  - Info: 1
+  - Critical : 0
+  - High     : 1
+  - Medium   : 3
+  - Low      : 2
+  - Info     : 1
+
 Findings:
-  - [HIGH] CORS reflects supplied Origin header (https://evil.example)
-  - [MEDIUM] Missing X-Frame-Options
-  - [LOW] Missing Referrer-Policy
+  [HIGH]   CORS reflects supplied Origin header (https://evil.example)
+  [MEDIUM] Missing X-Frame-Options
+  [MEDIUM] Missing Content-Security-Policy
+  [LOW]    Missing Referrer-Policy
 ```
 
-## Example JSON output
+---
 
-```bash
-python3 -m headerhound.cli --url https://example.com --format json
-```
-
-## Project structure
+## Project Structure
 
 ```text
 headerhound/
@@ -104,19 +110,33 @@ headerhound/
 └── README.md
 ```
 
+---
+
 ## Roadmap
 
-Planned next improvements:
-- TLS certificate checks
-- HTML report output
-- tech fingerprinting
-- custom header profiles
-- retry / rate-limit controls
+- [ ] TLS certificate checks
+- [ ] HTML report output
+- [ ] Tech fingerprinting
+- [ ] Custom header profiles
+- [ ] Retry / rate-limit controls
+
+---
 
 ## Disclaimer
 
-Use only on systems you own or are explicitly authorized to test.
+> Use only on systems you own or are explicitly authorized to test. Unauthorized scanning of systems is illegal and unethical.
+
+---
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
+
+---
+
+## Author
+
+**Rasaq Ayomide**
+Security Researcher | Penetration Tester | AppSec & Endpoint Security
+- GitHub: [@Calm-Ay](https://github.com/Calm-Ay)
+- Email: ayomiderasq6@gmail.com
