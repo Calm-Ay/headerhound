@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Header Hound | Calm Ay</title>
+  <meta name="description" content="Python web header &amp; misconfiguration scanner — checks security headers, cookie flags, CORS misconfiguration, redirec"/>
+  <meta property="og:title" content="Header Hound | Calm Ay"/>
+  <meta property="og:description" content="Python web header &amp; misconfiguration scanner — checks security headers, cookie flags, CORS misconfiguration, redirec"/>
+  <meta property="og:url" content="https://calm-ay.github.io/headerhound/"/>
+  <meta property="og:image" content="https://calm-ay.github.io/photo.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23e62020' d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/></svg>"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--red:#e62020;--white:#ffffff;--black:#000000;--card:#0d0d0d;--gray:#777;--border:#1c1c1c;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--white);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:3px;}
+    ::-webkit-scrollbar-track{background:#000;}
+    ::-webkit-scrollbar-thumb{background:var(--red);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 50px;background:rgba(0,0,0,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .nav-logo{display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:3px;color:var(--white);text-decoration:none;}
+    .nav-logo .bolt{color:var(--red);}
+    .nav-back{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;font-weight:700;transition:color 0.2s;}
+    .nav-back:hover{color:var(--white);}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 60px;}
+    .label{display:flex;align-items:center;gap:12px;font-size:0.68rem;letter-spacing:3px;color:var(--red);text-transform:uppercase;font-weight:700;margin-bottom:28px;}
+    .label::before{content:'';display:block;width:28px;height:2px;background:var(--red);}
+    .heading{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(3rem,7vw,6rem);line-height:0.9;text-transform:uppercase;}
+    .heading .w{color:var(--white);display:block;}
+    .heading .r{color:var(--red);display:block;}
+    .hero{min-height:100vh;display:flex;align-items:center;padding-top:80px;}
+    .hero-divider{width:50px;height:3px;background:var(--red);margin:22px 0;}
+    .hero-sub{color:var(--gray);font-size:0.92rem;line-height:1.75;max-width:580px;margin-top:8px;}
+    .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+    .tag{font-size:0.58rem;letter-spacing:1.5px;text-transform:uppercase;border:1px solid #2a2a2a;color:var(--gray);padding:3px 10px;border-radius:2px;font-weight:600;}
+    .btn-r{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;padding:13px 30px;border-radius:3px;font-weight:700;font-size:0.8rem;letter-spacing:2px;text-decoration:none;transition:opacity 0.2s;margin-top:28px;}
+    .btn-r:hover{opacity:0.82;}
+    .section{padding:80px 0;}
+    .area-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:36px;}
+    .area-card{background:#080808;border:1px solid var(--border);border-radius:3px;padding:24px;}
+    .area-card::before,.area-card::after{display:none;}
+    .area-label{font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:10px;}
+    .area-title{font-weight:700;font-size:0.95rem;margin-bottom:6px;}
+    .area-desc{font-size:0.75rem;color:var(--gray);line-height:1.6;}
+    .doc-row{background:#080808;border:1px solid var(--border);border-radius:3px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:36px;}
+    .doc-row:hover{border-color:#2a2a2a;}
+    .doc-title{font-weight:700;font-size:0.95rem;margin-bottom:5px;}
+    .doc-desc{font-size:0.78rem;color:var(--gray);line-height:1.6;max-width:560px;}
+    .doc-dl{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;padding:10px 20px;border-radius:3px;font-weight:700;font-size:0.72rem;letter-spacing:2px;text-decoration:none;transition:opacity 0.2s;white-space:nowrap;flex-shrink:0;}
+    .doc-dl:hover{opacity:0.82;}
+    .footer{padding:60px 0 40px;border-top:1px solid var(--border);}
+    .footer-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(3rem,9vw,8rem);text-transform:uppercase;color:transparent;-webkit-text-stroke:1px #2a0000;margin-top:40px;line-height:1;user-select:none;overflow:hidden;}
+    .footer-copy{font-size:0.72rem;color:#333;margin-top:16px;padding-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+    @media(max-width:768px){
+      nav{padding:12px 24px;flex-wrap:wrap;gap:8px;}
+      .wrap{padding:0 24px;}
+      .hero{padding-top:100px;}
+      .area-grid{grid-template-columns:1fr;}
+      .doc-row{flex-direction:column;align-items:flex-start;}
+    }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="https://calm-ay.github.io"><span class="bolt">⚡</span> CALM-AY</a>
+  <a class="nav-back" href="https://calm-ay.github.io">← Back to Portfolio</a>
+</nav>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="label">TOOL · PYTHON · BUG BOUNTY</div>
+      <div class="heading">
+        <span class="w">Header</span>
+        <span class="r">Hound</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="tag-row"><span class="tag">PYTHON</span><span class="tag">RECON</span><span class="tag">BUG BOUNTY</span><span class="tag">OPEN SOURCE</span></div>
+      <p class="hero-sub">Python web header &amp; misconfiguration scanner — checks security headers, cookie flags, CORS misconfiguration, redirect chains, and server disclosure. Built for bug bounty recon workflows.</p>
+      <a href="#areas" class="btn-r">VIEW DETAILS ↓</a>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section id="areas" class="section">
+    <div class="label">AREAS COVERED</div>
+    <div class="area-grid">
+      <div class="area-card">
+        <div class="area-label">Headers</div>
+        <div class="area-title">Security Header Analysis</div>
+        <div class="area-desc">Checks for missing or misconfigured CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-label">Cookies</div>
+        <div class="area-title">Cookie Flag Validation</div>
+        <div class="area-desc">Inspects all Set-Cookie headers for missing Secure, HttpOnly, and SameSite flags — common bug bounty P3–P4 findings.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-label">CORS</div>
+        <div class="area-title">CORS Misconfiguration Detection</div>
+        <div class="area-desc">Tests for wildcard origins, credential-bearing CORS policies, and origin reflection bugs that could enable cross-origin data theft.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-label">Disclosure</div>
+        <div class="area-title">Server &amp; Redirect Chain Analysis</div>
+        <div class="area-desc">Flags server banner disclosure, X-Powered-By leakage, and follows redirect chains to detect open redirects or mixed-content issues.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <footer class="footer">
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <a href="https://calm-ay.github.io" style="font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;font-weight:700;">← Portfolio</a>
+      <a href="https://github.com/Calm-Ay" style="font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;font-weight:700;">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/rasaq-ayomide-sec" style="font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;font-weight:700;">LinkedIn ↗</a>
+    </div>
+    <div class="footer-name">CALM AY</div>
+    <div class="footer-copy">
+      <span>Rasaq Ayomide · Ethical Hacking &amp; Offensive Security</span>
+      <span>calm-ay.github.io</span>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
